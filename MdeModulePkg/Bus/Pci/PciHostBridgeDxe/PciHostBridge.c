@@ -974,8 +974,15 @@ NotifyPhase (
             RootBridge->ResAllocNode[Index].Status = ResAllocated;
             DEBUG ((DEBUG_INFO, "Success\n"));
           } else {
-            ReturnStatus = EFI_OUT_OF_RESOURCES;
-            DEBUG ((DEBUG_ERROR, "Out Of Resource!\n"));
+            if (Index == TypeIo && RootBridge->Io.Limit == 0) {
+              DEBUG ((DEBUG_INFO, "port io not supported!\n"));
+              RootBridge->ResAllocNode[Index].Base = MAX_UINT64;
+              RootBridge->ResAllocNode[Index].Length = 0;
+              RootBridge->ResAllocNode[Index].Status = ResAllocated;
+            } else {
+              ReturnStatus = EFI_OUT_OF_RESOURCES;
+              DEBUG ((DEBUG_ERROR, "Out Of Resource!\n"));
+            }
           }
         }
       }
