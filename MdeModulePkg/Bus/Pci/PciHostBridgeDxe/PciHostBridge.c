@@ -876,7 +876,6 @@ NotifyPhase (
             DEBUG ((DEBUG_ERROR, "[%a:%d] Translation %lx is not aligned to %lx!\n",
               __FUNCTION__, __LINE__, Translation, Alignment
               ));
-            ASSERT ((Translation & Alignment) == 0);
             //
             // This may be caused by too large alignment or too small
             // Translation; pick the 1st possibility and return out of resource,
@@ -884,7 +883,6 @@ NotifyPhase (
             // outside the loop.
             //
             ReturnStatus = EFI_OUT_OF_RESOURCES;
-            continue;
           }
 
           switch (Index) {
